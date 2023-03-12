@@ -1,2 +1,6 @@
 # ykenan_log
-Simple log printing
+
+> **`Print and save a simple log to a file`**
+
+
+
