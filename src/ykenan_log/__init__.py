@@ -57,7 +57,7 @@ class Logger:
         self.today = datetime.datetime.now().strftime("%Y%m%d")
         self.default_log_file = f"ykenan_log_{self.today}.log"
 
-        log_path = self.getLogPath()
+        self.log_path = self.getLogPath()
 
         # Define two log output formats
         standard_format = '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]' '[%(levelname)s] ===> %(message)s'
@@ -95,7 +95,7 @@ class Logger:
                     'class': 'logging.handlers.RotatingFileHandler',
                     'formatter': 'standard',
                     # 日志文件
-                    'filename': log_path,
+                    'filename': self.log_path,
                     # 日志大小 单位: 字节
                     'maxBytes': 1024 * 1024 * 1024,
                     # 轮转文件的个数
@@ -140,11 +140,12 @@ class Logger:
         """
         # Determine whether it exists
         if self.log_path != "":
-            log_path = self.log_path if self.log_path.endswith(".log") else os.path.join(self.log_path, self.default_log_file)
+            log_path_file = self.log_path if self.log_path.endswith(".log") else os.path.join(self.log_path, self.default_log_file)
+            log_path = os.path.dirname(self.log_path) if self.log_path.endswith(".log") else self.log_path
             # create folder
-            if not os.path.exists(os.path.dirname(log_path)):
-                os.makedirs(os.path.dirname(log_path))
-            return log_path
+            if not os.path.exists(log_path):
+                os.makedirs(log_path)
+            return log_path_file
         else:
             return os.path.join(self.default_log_file)
 
@@ -161,46 +162,41 @@ class Logger:
         coloredlogs.install(level=self.level, level_styles=self.level_style, logger=logger)
         return logger
 
-    @staticmethod
-    def logger():
+    def logger(self):
         """
         得到 log
         :return:
         """
-        return Logger().__setting__()
+        return Logger(self.log_path).__setting__()
 
-    @staticmethod
-    def debug(content: str):
+    def debug(self, content: str):
         """
         log 日志 debug 信息
         :param content: 内容
         :return:
         """
-        return Logger().__setting__().debug(content)
+        return Logger(self.log_path).__setting__().debug(content)
 
-    @staticmethod
-    def info(content: str):
+    def info(self, content: str):
         """
         log 日志 info 信息
         :param content: 内容
         :return:
         """
-        return Logger().__setting__().info(content)
+        return Logger(self.log_path).__setting__().info(content)
 
-    @staticmethod
-    def warn(content: str):
+    def warn(self, content: str):
         """
         log 日志 warn 信息
         :param content: 内容
         :return:
         """
-        return Logger().__setting__().warning(content)
+        return Logger(self.log_path).__setting__().warning(content)
 
-    @staticmethod
-    def error(content: str):
+    def error(self, content: str):
         """
         log 日志 error 信息
         :param content: 内容
         :return:
         """
-        return Logger().__setting__().error(content)
+        return Logger(self.log_path).__setting__().error(content)
