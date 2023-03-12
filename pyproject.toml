@@ -1,5 +1,6 @@
 [build-system]
-requires = ["setuptools", "coloredlogs"]
+requires = ["setuptools>=42", "coloredlogs"]
+build-backend = "setuptools.build_meta"
 [project]
 name = "ykenan_log"
 version = "0.0.1"

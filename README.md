@@ -4,13 +4,13 @@
 
 ```shell
 pip install --upgrade build -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-py -m build
+pip install --upgrade twine -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
 ```
 
-
 ```shell
-pip install --upgrade twine -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-py -m twine upload --repository testpypi dist/*
+py -m build
+twine check dist/*
+twine upload dist/*
 ```
 
 
