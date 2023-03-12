@@ -144,6 +144,7 @@ class Logger:
             # create folder
             if not os.path.exists(os.path.dirname(log_path)):
                 os.makedirs(os.path.dirname(log_path))
+            return log_path
         else:
             return os.path.join(self.default_log_file)
 
