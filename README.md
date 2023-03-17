@@ -8,9 +8,9 @@ This is a simple log package. You can see
 > add requirements.txt
 
 ```shell
-python -m pip install -r requirements.txt
 py -m build
-py -m twine upload --repository testpypi dist/*
+twine check dist/*
+twine upload dist/*
 ```
 
 ## Use
