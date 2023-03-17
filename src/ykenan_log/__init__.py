@@ -45,13 +45,18 @@ class LoggerExec:
     Log Set
     """
 
-    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True):
+    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True,
+                 is_form_file: bool = True, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"):
         """
         Log initialization
         :param name: Project Name
-        :param log_path: Log file output path
-        :param level: Log printing level
-        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter
+        :param log_path: Log file output path. Default is log_%Y%m%d.log.
+        :param level: Log printing level. Default is DEBUG.
+        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
+        :param is_form_file: Whether to form a log file. Default is True.
+        :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)
+        :param backup_count: Setting the number of rotating files if a file is formed. Default is 10.
+        :param encoding: Setting of file encoding if a file is formed. Default is UTF-8.
         """
         self.name = name
         self.log_path = log_path
@@ -61,18 +66,39 @@ class LoggerExec:
         # Default File Name
         self.default_log_file = f"{name}_log_{self.today}.log" if name and is_solitary else f"log_{self.today}.log"
 
-        self.log_path_name = self.getLogPath()
+        self.log_path_name = self.getLogPath() if is_form_file else None
 
         # Define two log output formats
-        standard_format = '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]' '[%(levelname)s] ===> %(message)s'
-        simple_format = '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d] ===> %(message)s'
+        standard_format = '[%(asctime)s] [%(threadName)s:%(thread)d] [task_id:%(name)s] [%(filename)s:%(lineno)d] [%(levelname)s] ===> %(message)s'
+        simple_format = '[%(levelname)s] [%(asctime)s] [%(filename)s:%(lineno)d] ===> %(message)s'
 
-        # log 配置字典
-        # logging_dic 第一层的所有的键不能改变
+        # Log printed to the terminal
+        handlers_sh = {
+            # Print to screen
+            'class': 'logging.StreamHandler',
+            'level': self.level,
+            'formatter': 'simple'
+        }
+        # Print logs to files and collect logs with info and above
+        handlers_fh = {
+            'level': self.level,
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            # log file
+            'filename': self.log_path_name,
+            # Log size in bytes, default: 100MB
+            'maxBytes': size,
+            # Number of rotating files
+            'backupCount': backup_count,
+            # Encoding of log files
+            'encoding': encoding,
+        }
+
+        # log Configuration Dictionary
         self.logging_dic = {
-            # 版本号
+            # Version number
             'version': 1,
-            # 固定写法
+            # Fixed notation
             'disable_existing_loggers': False,
             'formatters': {
                 'standard': {
@@ -86,41 +112,24 @@ class LoggerExec:
             },
             'filters': {},
             'handlers': {
-                # 打印到终端的日志
-                'sh': {
-                    # 打印到屏幕
-                    'class': 'logging.StreamHandler',
-                    'level': 'DEBUG',
-                    'formatter': 'simple'
-                },
-                # 打印到文件的日志,收集 info 及以上的日志
-                'fh': {
-                    'level': 'DEBUG',
-                    'class': 'logging.handlers.RotatingFileHandler',
-                    'formatter': 'standard',
-                    # 日志文件
-                    'filename': self.log_path_name,
-                    # 日志大小 单位: 字节
-                    'maxBytes': 1024 * 1024 * 1024,
-                    # 轮转文件的个数
-                    'backupCount': 5,
-                    # 日志文件的编码
-                    'encoding': 'utf-8',
-                },
+                'sh': handlers_sh,
+                'fh': handlers_fh
+            } if is_form_file else {
+                'sh': handlers_sh
             },
             'loggers': {
-                # logging.getLogger(__name__) 拿到的 logger 配置
+                # Logger configuration obtained by logging.getLogger(__name__)
                 '': {
-                    # 这里把上面定义的两个 handler 都加上，即 log 数据既写入文件又打印到屏幕
-                    'handlers': ['sh', 'fh'],
-                    'level': 'DEBUG',
-                    # 向上（更高 level 的 logger）传递
+                    # Here, we add the two handlers defined above, that is, log data is written to a file and printed to the screen
+                    'handlers': ['sh', 'fh'] if is_form_file else ['sh'],
+                    'level': self.level,
+                    # Pass up (higher level loggers)
                     'propagate': True,
                 },
             },
         }
 
-        # log 日志级别输颜色样式
+        # Log level color input style
         self.level_style = {
             'debug': {
                 'color': 'white'
@@ -172,25 +181,34 @@ class Logger:
     Log initialization
     """
 
-    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True):
+    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True,
+                 is_form_file: bool = True, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"):
         """
         Log initialization
         :param name: Project Name
-        :param log_path: Log file output path
-        :param level: Log printing level
-        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter
+        :param log_path: Log file output path. Default is log_%Y%m%d.log.
+        :param level: Log printing level. Default is DEBUG.
+        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
+        :param is_form_file: Whether to form a log file. Default is True.
+        :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)
+        :param backup_count: Setting the number of rotating files if a file is formed. Default is 10.
+        :param encoding: Setting of file encoding if a file is formed. Default is UTF-8.
         """
         self.name = name
         self.log_path = log_path
         self.level = level
         self.is_solitary = is_solitary
+        self.is_form_file = is_form_file
+        self.size = size
+        self.backup_count = backup_count
+        self.encoding = encoding
 
     def logger(self):
         """
         Get log
         :return:
         """
-        return LoggerExec(self.name, self.log_path, self.level, self.is_solitary).__setting__()
+        return LoggerExec(self.name, self.log_path, self.level, self.is_solitary, self.is_form_file, self.size, self.backup_count, self.encoding).__setting__()
 
     def debug(self, content: str):
         """

@@ -3,12 +3,12 @@ requires = ["setuptools>=42", "coloredlogs>=15.0"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "ykenan_log"
-version = "0.1.2"
+version = "0.2.0"
 authors = [
     { name = "Yu Zhengmin", email = "3236170161@qq.com" },
 ]
 keywords = ["ykenan", "log", "file"]
-description = "Print and save a simple log to a file"
+description = "Log information: Print the log, export the log file."
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = ["coloredlogs>=15.0"]
