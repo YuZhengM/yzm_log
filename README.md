@@ -18,7 +18,6 @@ twine upload dist/*
 > install
 
 ```shell
-pip install coloredlogs
 pip install ykenan_log
 ```
 
