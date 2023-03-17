@@ -2,6 +2,17 @@
 
 > **`Print and save a simple log to a file`**
 
+This is a simple log package. You can see
+[Github-ykenan_log](https://github.com/YuZhengM/ykenan_log)
+
+> add requirements.txt
+
+```shell
+python -m pip install -r requirements.txt
+py -m build
+py -m twine upload --repository testpypi dist/*
+```
+
 ## Use
 
 > install
