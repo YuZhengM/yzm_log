@@ -2,17 +2,6 @@
 
 > **`Print and save a simple log to a file`**
 
-```shell
-pip install --upgrade build -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-pip install --upgrade twine -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-```
-
-```shell
-py -m build
-twine check dist/*
-twine upload dist/*
-```
-
 ## Use
 
 > install
@@ -29,7 +18,7 @@ pip install ykenan_log
 
 import ykenan_log
 
-logger = ykenan_log.Logger("log")
+logger = ykenan_log.Logger("name", "log")
 
 if __name__ == '__main__':
     print("run...")
@@ -39,4 +28,13 @@ if __name__ == '__main__':
     logger.error("info......")
 ```
 
-![img.png](img.png)
+> output
+
+```shell
+run...
+2023-03-17 09:21:36 root name[34768] DEBUG info......
+2023-03-17 09:21:36 root name[34768] INFO info......
+2023-03-17 09:21:36 root name[34768] WARNING info......
+2023-03-17 09:21:36 root name[34768] ERROR info......
+
+```

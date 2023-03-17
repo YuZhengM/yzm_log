@@ -40,24 +40,28 @@ coloredlogs.DEFAULT_FIELD_STYLES = {
 }
 
 
-class Logger:
+class LoggerExec:
     """
-    Log initialization
+    Log Set
     """
 
-    def __init__(self, log_path: str = "", level: str = "DEBUG"):
+    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True):
         """
         Log initialization
+        :param name: Project Name
         :param log_path: Log file output path
         :param level: Log printing level
+        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter
         """
+        self.name = name
         self.log_path = log_path
         self.level = level
-        # log  路径
+        # Get Today's Time
         self.today = datetime.datetime.now().strftime("%Y%m%d")
-        self.default_log_file = f"ykenan_log_{self.today}.log"
+        # Default File Name
+        self.default_log_file = f"{name}_log_{self.today}.log" if name and is_solitary else f"log_{self.today}.log"
 
-        self.log_path = self.getLogPath()
+        self.log_path_name = self.getLogPath()
 
         # Define two log output formats
         standard_format = '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]' '[%(levelname)s] ===> %(message)s'
@@ -95,7 +99,7 @@ class Logger:
                     'class': 'logging.handlers.RotatingFileHandler',
                     'formatter': 'standard',
                     # 日志文件
-                    'filename': self.log_path,
+                    'filename': self.log_path_name,
                     # 日志大小 单位: 字节
                     'maxBytes': 1024 * 1024 * 1024,
                     # 轮转文件的个数
@@ -139,7 +143,7 @@ class Logger:
         :return:
         """
         # Determine whether it exists
-        if self.log_path != "":
+        if self.log_path:
             log_path_file = self.log_path if self.log_path.endswith(".log") else os.path.join(self.log_path, self.default_log_file)
             log_path = os.path.dirname(self.log_path) if self.log_path.endswith(".log") else self.log_path
             # create folder
@@ -151,52 +155,71 @@ class Logger:
 
     def __setting__(self):
         """
-        log 设置
+        Log Settings
         :return:
         """
-        # 导入上面定义的 logging 配置 通过字典方式去配置这个日志
+        # Import the logging configuration defined above to configure this log through the dictionary method
         log_conf.dictConfig(self.logging_dic)
-        # 生成一个 log 实例  这里可以有参数 传给 task_id
-        logger = logging.getLogger()
-        # 设置颜色
+        # Generate a log instance where parameters can be passed to the task_id
+        logger = logging.getLogger(self.name)
+        # Set Color
         coloredlogs.install(level=self.level, level_styles=self.level_style, logger=logger)
         return logger
 
+
+class Logger:
+    """
+    Log initialization
+    """
+
+    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True):
+        """
+        Log initialization
+        :param name: Project Name
+        :param log_path: Log file output path
+        :param level: Log printing level
+        :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter
+        """
+        self.name = name
+        self.log_path = log_path
+        self.level = level
+        self.is_solitary = is_solitary
+
     def logger(self):
         """
-        得到 log
+        Get log
         :return:
         """
-        return Logger(self.log_path).__setting__()
+        return LoggerExec(self.name, self.log_path, self.level, self.is_solitary).__setting__()
 
     def debug(self, content: str):
         """
-        log 日志 debug 信息
-        :param content: 内容
+        Log debug information
+        :param content: content
         :return:
         """
-        return Logger(self.log_path).__setting__().debug(content)
+        return self.logger().debug(content)
 
     def info(self, content: str):
         """
-        log 日志 info 信息
-        :param content: 内容
+        log info information
+        :param content: content
         :return:
         """
-        return Logger(self.log_path).__setting__().info(content)
+        return self.logger().info(content)
 
     def warn(self, content: str):
         """
-        log 日志 warn 信息
-        :param content: 内容
+        log warn information
+        :param content: content
         :return:
         """
-        return Logger(self.log_path).__setting__().warning(content)
+        return self.logger().warning(content)
 
     def error(self, content: str):
         """
-        log 日志 error 信息
-        :param content: 内容
+        log error information
+        :param content: content
         :return:
         """
-        return Logger(self.log_path).__setting__().error(content)
+        return self.logger().error(content)
