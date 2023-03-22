@@ -4,6 +4,7 @@
 
 This is a simple log package. You can see
 [Github-ykenan_log](https://github.com/YuZhengM/ykenan_log)
+[PyPI-ykenan_log](https://pypi.org/project/ykenan-log/)
 
 > upload
 
