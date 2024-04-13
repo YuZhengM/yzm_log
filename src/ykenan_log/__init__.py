@@ -45,13 +45,15 @@ class LoggerExec:
     Log Set
     """
 
-    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True,
-                 is_form_file: bool = True, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"):
+    def __init__(
+        self, name: str = None, log_path: str = None, level: str = "INFO", is_solitary: bool = True,
+        is_form_file: bool = False, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"
+    ):
         """
         Log initialization
         :param name: Project Name
         :param log_path: Log file output path. Default is log_%Y%m%d.log.
-        :param level: Log printing level. Default is DEBUG.
+        :param level: Log printing level. Default is INFO.
         :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
         :param is_form_file: Whether to form a log file. Default is True.
         :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)
@@ -66,7 +68,7 @@ class LoggerExec:
         # Default File Name
         self.default_log_file = f"{name}_log_{self.today}.log" if name and is_solitary else f"log_{self.today}.log"
 
-        self.log_path_name = self.getLogPath() if is_form_file else None
+        self.log_path_name = self.get_log_path() if is_form_file else None
 
         # Define two log output formats
         standard_format = '[%(asctime)s] [%(threadName)s:%(thread)d] [task_id:%(name)s] [%(filename)s:%(lineno)d] [%(levelname)s] ===> %(message)s'
@@ -146,7 +148,7 @@ class LoggerExec:
             }
         }
 
-    def getLogPath(self) -> str:
+    def get_log_path(self) -> str:
         """
         Get log output path
         :return:
@@ -181,13 +183,15 @@ class Logger:
     Log initialization
     """
 
-    def __init__(self, name: str = None, log_path: str = None, level: str = "DEBUG", is_solitary: bool = True,
-                 is_form_file: bool = True, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"):
+    def __init__(
+        self, name: str = None, log_path: str = None, level: str = "INFO", is_solitary: bool = True,
+        is_form_file: bool = False, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"
+    ):
         """
         Log initialization
         :param name: Project Name
         :param log_path: Log file output path. Default is log_%Y%m%d.log.
-        :param level: Log printing level. Default is DEBUG.
+        :param level: Log printing level. Default is INFO.
         :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
         :param is_form_file: Whether to form a log file. Default is True.
         :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)

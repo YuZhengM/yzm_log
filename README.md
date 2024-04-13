@@ -27,22 +27,21 @@ pip install ykenan_log
 ```python
 # -*- coding: utf-8 -*-
 
-import ykenan_log
+from ykenan_log import Logger
 
-logger = ykenan_log.Logger("name", "log")
+log = Logger("name", "log")
 
 if __name__ == '__main__':
     print("run...")
-    logger.debug("info......")
-    logger.info("info......")
-    logger.warn("info......")
-    logger.error("info......")
+    log.debug("info......")
+    log.info("info......")
+    log.warn("info......")
+    log.error("info......")
 ```
 
 > output
 
 ```shell
-run...
 2023-03-17 09:21:36 root name[34768] DEBUG info......
 2023-03-17 09:21:36 root name[34768] INFO info......
 2023-03-17 09:21:36 root name[34768] WARNING info......
@@ -54,29 +53,29 @@ run...
 
 > **main function**
 
-> ykenan_log.Logger(
+> ykenan_log.`Logger`(
 >> name: str = None,
-> 
+>
 >> log_path: str = None,
-> 
->> level: str = "DEBUG",
-> 
+>
+>> level: str = "INFO",
+>
 >> is_solitary: bool = True,
-> 
+>
 >> is_form_file: bool = True,
-> 
+>
 >> size: int = 104857600,
-> 
+>
 >> backup_count: int = 10,
-> 
+>
 >> encoding: str = "UTF-8"
-> 
-> ) 
+>
+> )
 
 ```
 :param name: Project Name
 :param log_path: Log file output path. Default is log_%Y%m%d.log.
-:param level: Log printing level. Default is DEBUG.
+:param level: Log printing level. Default is INFO.
 :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
 :param is_form_file: Whether to form a log file. Default is True.
 :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)
