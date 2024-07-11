@@ -62,7 +62,7 @@ if __name__ == '__main__':
 >
 >> is_solitary: bool = True,
 >
->> is_form_file: bool = True,
+>> is_form_file: bool = False,
 >
 >> size: int = 104857600,
 >
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 :param log_path: Log file output path. Default is log_%Y%m%d.log.
 :param level: Log printing level. Default is INFO.
 :param is_solitary: When the file path is consistent (here, the log_path parameter is not a specific file name, but a file path), whether the file is formed independently according to the name parameter. Default is True.
-:param is_form_file: Whether to form a log file. Default is True.
+:param is_form_file: Whether to form a log file. Default is False.
 :param size: Setting the file size if a file is formed. Default is 104857600. (100MB)
 :param backup_count: Setting the number of rotating files if a file is formed. Default is 10.
 :param encoding: Setting of file encoding if a file is formed. Default is UTF-8.

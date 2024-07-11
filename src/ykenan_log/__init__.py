@@ -46,8 +46,15 @@ class LoggerExec:
     """
 
     def __init__(
-        self, name: str = None, log_path: str = None, level: str = "INFO", is_solitary: bool = True,
-        is_form_file: bool = False, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"
+        self,
+        name: str = None,
+        log_path: str = None,
+        level: str = "INFO",
+        is_solitary: bool = True,
+        is_form_file: bool = False,
+        size: int = 104857600,
+        backup_count: int = 10,
+        encoding: str = "UTF-8"
     ):
         """
         Log initialization
@@ -184,8 +191,15 @@ class Logger:
     """
 
     def __init__(
-        self, name: str = None, log_path: str = None, level: str = "INFO", is_solitary: bool = True,
-        is_form_file: bool = False, size: int = 104857600, backup_count: int = 10, encoding: str = "UTF-8"
+        self,
+        name: str = None,
+        log_path: str = None,
+        level: str = "INFO",
+        is_solitary: bool = True,
+        is_form_file: bool = False,
+        size: int = 104857600,
+        backup_count: int = 10,
+        encoding: str = "UTF-8"
     ):
         """
         Log initialization
