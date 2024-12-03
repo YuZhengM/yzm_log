@@ -220,6 +220,7 @@ class Logger:
         self.size = size
         self.backup_count = backup_count
         self.encoding = encoding
+        self.log = self.logger()
 
     def logger(self):
         """
@@ -234,7 +235,7 @@ class Logger:
         :param content: content
         :return:
         """
-        return self.logger().debug(content)
+        return self.log.debug(content)
 
     def info(self, content: str):
         """
@@ -242,7 +243,7 @@ class Logger:
         :param content: content
         :return:
         """
-        return self.logger().info(content)
+        return self.log.info(content)
 
     def warn(self, content: str):
         """
@@ -250,7 +251,7 @@ class Logger:
         :param content: content
         :return:
         """
-        return self.logger().warning(content)
+        return self.log.warning(content)
 
     def error(self, content: str):
         """
@@ -258,4 +259,10 @@ class Logger:
         :param content: content
         :return:
         """
-        return self.logger().error(content)
+        return self.log.error(content)
+
+    def disabled(self):
+        self.log.disabled = True
+
+    def enabled(self):
+        self.log.disabled = False
