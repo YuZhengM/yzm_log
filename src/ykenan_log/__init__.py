@@ -7,7 +7,7 @@ import os
 import coloredlogs
 
 '''
- * @Author       : YKenan
+ * @Author       : Zhengmin Yu
  * @Description  : Log file configuration
 '''
 
