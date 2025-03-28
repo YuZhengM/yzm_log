@@ -245,7 +245,7 @@ class Logger:
         """
         return self.log.info(content)
 
-    def warn(self, content: str):
+    def warning(self, content: str):
         """
         log warn information
         :param content: content

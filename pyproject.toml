@@ -1,16 +1,17 @@
 [build-system]
-requires = ["setuptools>=42", "coloredlogs>=15.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 [project]
 name = "ykenan_log"
-version = "0.2.4"
+version = "0.2.5"
 authors = [
     { name = "Zhengmin Yu", email = "yuzmbio@163.com" },
 ]
 keywords = ["YKenan", "log", "file"]
 description = "Log information: Print the log, export the log file."
 readme = "README.md"
-requires-python = ">=3.7"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
 dependencies = ["coloredlogs>=15.0"]
 classifiers = [
     "Programming Language :: Python :: 3",

@@ -35,7 +35,7 @@ if __name__ == '__main__':
     print("run...")
     log.debug("info......")
     log.info("info......")
-    log.warn("info......")
+    log.warning("info......")
     log.error("info......")
 ```
 
