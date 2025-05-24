@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ykenan_log import Logger
+from yzm_log import Logger
 
 
 class TestLog:

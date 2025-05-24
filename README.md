@@ -1,10 +1,10 @@
-# ykenan_log
+# yzm_log
 
 > **`Print and save a simple log to a file`**
 
 This is a simple log package. You can see
-[Github-ykenan_log](https://github.com/YuZhengM/ykenan_log)
-[PyPI-ykenan_log](https://pypi.org/project/ykenan-log/)
+[Github-yzm_log](https://github.com/YuZhengM/yzm_log)
+[PyPI-yzm_log](https://pypi.org/project/yzm_log/)
 
 > upload
 
@@ -19,7 +19,7 @@ twine upload dist/*
 > install
 
 ```shell
-pip install ykenan_log
+pip install yzm_log
 ```
 
 > use
@@ -27,7 +27,7 @@ pip install ykenan_log
 ```python
 # -*- coding: utf-8 -*-
 
-from ykenan_log import Logger
+from yzm_log import Logger
 
 log = Logger("name", "log")
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 
 > **main function**
 
-> ykenan_log.`Logger`(
+> yzm_log.`Logger`(
 >> name: str = None,
 >
 >> log_path: str = None,
